@@ -16,13 +16,29 @@ from matplotlib import pyplot as plt
 # You may need to import information from HW3 and/or
 # HW6 to load in your unidimensional and multidimensional
 # Lagrange basis function code 
+sys.path.append('../HW3/')
+sys.path.append('../HW6/')
+
+import HW3_CE_ME_507_Homework_3_Python_Solutions as u_basis
+import HW6_CE_ME_507_MultiDimensionalBasisFunctions_Solutions as m_basis
+
 
 # input polynomial degree, p,
 #       interpolation points, pts,
 #       the point of evaluation, xi,
 #   and the basis fnction index, a
 def LagrangeBasisParamDervEvaluation(p,pts,xi,a):
-    return
+    summation = 0
+    for j in range(0,p+1):
+        if j == a:
+            continue
+        else:
+            part_pts = pts[0:j]+pts[j+1:]
+            new_a = a if j > a else a-1
+            part_lagrange = u_basis.LagrangeBasisEvaluation(p-1, part_pts, xi, new_a)
+            summation += 1/(pts[a]-pts[j]) * part_lagrange
+    
+    return summation
 
 # you may want to create a function here that 
 # converts from a single index, A, and a set of 
@@ -32,13 +48,29 @@ def LagrangeBasisParamDervEvaluation(p,pts,xi,a):
 # you will need this functionality, though you do
 # not need to complete this function for full credit
 def GlobalToLocalIdxs(A,degs):
-    return
+    bfs = degs[0]+1
+    horiz = A % (bfs)
+    idxs = [horiz]
+    for i in range(1,len(degs)):
+        idxs.append(A // bfs)
+        bfs *= (degs[i]+1)
+
+    return idxs
 
 # evaluate the partial derivative of a nD lagrange 
 # basis function of index A in the "dim" dimension
 # (e.g. derivative in xi is 0, in eta is 1)
 def LagrangeBasisDervParamMultiD(A,degs,interp_pts,xis,dim):
-    return
+    idxs = GlobalToLocalIdxs(A,degs)
+    
+    val = 1
+    for i in range(0,len(degs)):
+        if i == dim:
+            val *= LagrangeBasisParamDervEvaluation(degs[i], interp_pts[i], xis[i], idxs[i])
+        else:
+            val *= u_basis.LagrangeBasisEvaluation(degs[i], interp_pts[i], xis[i], idxs[i])
+
+    return val
 
 # Plot the Lagrange polynomial basis function
 # derivatives
