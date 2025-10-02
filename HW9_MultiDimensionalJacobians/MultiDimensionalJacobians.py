@@ -93,13 +93,29 @@ class LagrangeBasis2D:
     # the Jacobian matrix)
     def EvaluateDeformationGradient(self, x_pts, xi_vals):
         # COMPLETE THIS TIME
-        return
+        n_spat_dim = len(x_pts[0])
+        n_param_dim = 2
+        def_grad = np.zeros((n_param_dim,n_spat_dim))
+        for j in range(0,n_param_dim):
+            for A in range(0,self.NBasisFuncs()):
+                Na_derv = self.EvalBasisDerivative(A,xi_vals,j)
+                for i in range(0,n_spat_dim):
+                    def_grad[i,j] += x_pts[A][i] * Na_derv
+        
+        return def_grad
+    
     
     # Evaluate the jacobian (or the determinant
     # of the deformation gradient)
     def EvaluateJacobian(self, x_pts, xi_vals):
         # COMPLETE THIS TIME
-        return
+        def_grad = self.EvaluateDeformationGradient(x_pts, xi_vals)
+        n_param_dim = def_grad.shape[1]
+        n_spat_dim = def_grad.shape[0]
+        if n_param_dim != n_spat_dim:
+            sys.exit("Cannot yet evalutate the Jacobian when differing spatial and parametric dimensions")
+        else:
+            return np.linalg.det(def_grad)
     
     # Grid plotting functionality that is used
     # in all other plotting functions

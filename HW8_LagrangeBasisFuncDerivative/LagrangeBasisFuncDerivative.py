@@ -20,7 +20,7 @@ sys.path.append('../HW3_Univariate_Lagrange/')
 sys.path.append('../HW6_MultiDimensionalBasisFunctions/')
 
 import Univariate_Lagrange_Basis_Functions as u_basis
-import MultiDimensionalBasisFunctions_Solutions as m_basis
+import MultiDimensionalBasisFunctions as m_basis
 
 
 # input polynomial degree, p,

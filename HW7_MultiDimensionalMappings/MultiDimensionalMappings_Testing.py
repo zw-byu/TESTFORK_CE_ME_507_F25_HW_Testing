@@ -8,7 +8,7 @@ Created on Thu Feb  6 12:21:14 2025
 
 import numpy as np
 import MultiDimensionalMappings as MultiMap
-# import MultiDimensionalMappings_Solutions as MultiMap
+# import MultiDimensionalMappings as MultiMap
 
 import unittest
 

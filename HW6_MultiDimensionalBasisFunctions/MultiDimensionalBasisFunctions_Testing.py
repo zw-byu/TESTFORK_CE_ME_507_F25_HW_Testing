@@ -7,7 +7,7 @@ Created on Thu Feb  6 12:21:14 2025
 """
 
 import MultiDimensionalBasisFunctions as MultiBFs
-# import MultiDimensionalBasisFunctions_Solutions as MultiBFs
+# import MultiDimensionalBasisFunctions as MultiBFs
 
 import unittest
 

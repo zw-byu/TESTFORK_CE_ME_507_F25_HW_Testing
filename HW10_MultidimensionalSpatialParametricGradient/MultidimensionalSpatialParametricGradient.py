@@ -16,7 +16,12 @@ from matplotlib import pyplot as plt
 # in previous homework assignments to complete
 # this homework and minimize the amount of 
 # work you have to repeat
+sys.path.append('../HW6_MultiDimensionalBasisFunctions/')
+sys.path.append('../HW8_LagrangeBasisFuncDerivative/')
 
+
+import MultiDimensionalBasisFunctions as mbasis
+import LagrangeBasisFuncDerivative as derv
 # this class was created earlier in a previous
 # assignment, but has been extended to cope with
 # derivatives of basis functions and to plot
@@ -36,7 +41,10 @@ class LagrangeBasis2D:
     # and y (eta) directions
     def NBasisFuncs(self):
         # IMPORT/COPY THIS FROM EARLIER HW
-        return
+        nbf = 1
+        for deg in self.degs:
+            nbf *= (deg+1)
+        return nbf
         
     # basis function evaluation code from 
     # previous homework assignment
@@ -44,50 +52,80 @@ class LagrangeBasis2D:
     # or copied before this class is defined
     def EvalBasisFunction(self,A,xi_vals):
         # IMPORT/COPY THIS FROM EARLIER HW
-        return      
+        return mbasis.MultiDimensionalBasisFunction(A,self.degs,self.interp_pts,xi_vals)
     
     # derivative of basis function code
     # from previous homework
     def EvalBasisDerivative(self,A,xis,dim):
         # IMPORT/COPY THIS FROM RECENT HOMEWORK
-        return 
-
+        return derv.LagrangeBasisDervParamMultiD(A,self.degs,self.interp_pts,xis,dim)
 
     # Evaluate a sum of basis functions times 
     # coefficients on the parent domain
     def EvaluateFunctionParentDomain(self, d_coeffs, xi_vals):
-        # IMPORT/COPY THIS FROM RECENT HOMEWORK
-        return
+        val = 0
+        for a in range(0,self.NBasisFuncs()):
+            val += d_coeffs[a] * self.EvalBasisFunction(a,xi_vals)
+        return val
         
     # Evaluate the spatial mapping from xi and eta
     # into x and y coordinates
     def EvaluateSpatialMapping(self, x_pts, xi_vals):
-        # IMPORT/COPY THIS FROM RECENT HOMEWORK
-        return
+        dim = len(x_pts[0])
+        pt = np.zeros(dim)
+        for a in range(0,self.NBasisFuncs()):
+            Na = self.EvalBasisFunction(a,xi_vals)
+            x_pt = x_pts[a]
+            for j in range(0,dim):
+                pt[j] += x_pt[j] * Na
+                
+        return pt
     
     # Evaluate the Deformation Gradient (i.e.
     # the Jacobian matrix)
     def EvaluateDeformationGradient(self, x_pts, xi_vals):
         # IMPORT/COPY THIS FROM RECENT HOMEWORK
-        return
+        n_spat_dim = len(x_pts[0])
+        n_param_dim = 2
+        def_grad = np.zeros((n_param_dim,n_spat_dim))
+        for j in range(0,n_param_dim):
+            for A in range(0,self.NBasisFuncs()):
+                Na_derv = self.EvalBasisDerivative(A,xi_vals,j)
+                for i in range(0,n_spat_dim):
+                    def_grad[i,j] += x_pts[A][i] * Na_derv
+        
+        return def_grad
     
     # Evaluate the jacobian (or the determinant
     # of the deformation gradient)
     def EvaluateJacobian(self, x_pts, xi_vals):
         # IMPORT/COPY THIS FROM RECENT HOMEWORK
-        return
+        def_grad = self.EvaluateDeformationGradient(x_pts, xi_vals)
+        n_param_dim = def_grad.shape[1]
+        n_spat_dim = def_grad.shape[0]
+        if n_param_dim != n_spat_dim:
+            sys.exit("Cannot yet evalutate the Jacobian when differing spatial and parametric dimensions")
+        else:
+            return np.linalg.det(def_grad)
 
     # Evaluate the parametric gradient of a basis
     # function
     def EvaluateBasisParametricGradient(self,A, xi_vals):
         # COMPLETE THIS TIME
-        return
+        pgrad = np.zeros(2)
+        for i in range(0,2):
+            pgrad[i] = self.EvalBasisDerivative(A, xi_vals, i)
+            
+        return pgrad
 
     # Evaluate the parametric gradient of a basis
     # function
     def EvaluateBasisSpatialGradient(self,A, x_pts, xi_vals):
         # COMPLETE THIS TIME
-        return
+        def_grad = self.EvaluateDeformationGradient(x_pts, xi_vals)
+        pgrad = self.EvaluateBasisParametricGradient(A, xi_vals)
+        s_grad = np.linalg.solve(def_grad.transpose(),pgrad)
+        return s_grad
 
     # Grid plotting functionality that is used
     # in all other plotting functions

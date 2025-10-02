@@ -7,7 +7,7 @@ Created on Thu Feb  6 12:21:14 2025
 """
 
 import UniDimensionalXMap as UniMap
-# import UniDimensionalXMap_Solutions as UniMap
+# import UniDimensionalXMap as UniMap
 
 import unittest
 

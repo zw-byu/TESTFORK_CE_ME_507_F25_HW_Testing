@@ -7,7 +7,7 @@ Created on Thu Feb  6 12:21:14 2025
 """
 
 import Univariate_Lagrange_Basis_Functions as UniLagrange
-# import Univariate_Lagrange_Basis_Functions_Solutions as UniLagrange
+# import Univariate_Lagrange_Basis_Functions as UniLagrange
 
 import unittest
 

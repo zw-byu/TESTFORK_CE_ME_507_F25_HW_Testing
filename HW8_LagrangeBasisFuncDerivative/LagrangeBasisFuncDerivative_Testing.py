@@ -7,7 +7,7 @@ Created on Thu Feb  6 12:21:14 2025
 """
 
 import LagrangeBasisFuncDerivative as Lagrange
-# import LagrangeBasisFuncDerivative_Solutions as Lagrange
+# import LagrangeBasisFuncDerivative as Lagrange
 
 import unittest
 

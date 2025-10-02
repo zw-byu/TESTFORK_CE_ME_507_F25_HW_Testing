@@ -8,7 +8,7 @@ Created on Thu Feb  6 12:21:14 2025
 
 import numpy as np
 import MultidimensionalSpatialParametricGradient as Lagrange
-# import MultidimensionalSpatialParametricGradient_Solutions as Lagrange
+# import MultidimensionalSpatialParametricGradient as Lagrange
 
 import unittest
 

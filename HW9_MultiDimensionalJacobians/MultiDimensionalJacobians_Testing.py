@@ -8,7 +8,7 @@ Created on Thu Feb  6 12:21:14 2025
 
 import numpy as np
 import MultiDimensionalJacobians as Lagrange
-# import MultiDimensionalJacobians_Solutions as Lagrange
+# import MultiDimensionalJacobians as Lagrange
 
 import unittest
 

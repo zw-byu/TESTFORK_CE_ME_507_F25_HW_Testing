@@ -19,9 +19,9 @@ from matplotlib import pyplot as plt
 # functionality using
 # import < INSERT YOUR MODULE NAME HERE >
 
-sys.path.append('../HW6_MultiDimensionalBasisFunction/')
+sys.path.append('../HW6_MultiDimensionalBasisFunctions/')
 
-import MultiDimensionalBasisFunction as basis
+import MultiDimensionalBasisFunctions as basis
 
 # This is a class that describes a Lagrange basis
 # in two dimensions

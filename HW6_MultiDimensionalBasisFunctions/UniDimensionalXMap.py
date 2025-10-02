@@ -22,8 +22,10 @@ import Univariate_Lagrange_Basis_Functions as HW3
 
 # x(\xi) = \sum_{a=0}^p x_a * N_a(\xi)
 def XMap(deg,spatial_pts,interp_pts,xi):
-    # complete this function
-    return
+    xval = 0
+    for a in range(0,deg+1):
+        xval += spatial_pts[a] * HW3.LagrangeBasisEvaluation(deg,interp_pts,xi,a)
+    return xval
 
 def PlotXMap(deg,spatial_pts,interp_pts, npts=101, contours=True):
     # parametric points to evaluate in Lagrange basis function
