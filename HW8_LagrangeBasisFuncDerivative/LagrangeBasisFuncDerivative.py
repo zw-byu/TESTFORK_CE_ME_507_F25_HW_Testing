@@ -16,11 +16,11 @@ from matplotlib import pyplot as plt
 # You may need to import information from HW3 and/or
 # HW6 to load in your unidimensional and multidimensional
 # Lagrange basis function code 
-sys.path.append('../HW3/')
-sys.path.append('../HW6/')
+sys.path.append('../HW3_Univariate_Lagrange/')
+sys.path.append('../HW6_MultiDimensionalBasisFunctions/')
 
-import HW3_CE_ME_507_Homework_3_Python_Solutions as u_basis
-import HW6_CE_ME_507_MultiDimensionalBasisFunctions_Solutions as m_basis
+import Univariate_Lagrange_Basis_Functions as u_basis
+import MultiDimensionalBasisFunctions_Solutions as m_basis
 
 
 # input polynomial degree, p,

@@ -18,7 +18,7 @@ sys.path.append('../HW8_LagrangeBasisFuncDerivative/')
 
 
 import MultiDimensionalBasisFunctions as mbasis
-import LagrangeBasisFuncDerivative as mderv
+import LagrangeBasisFuncDerivative as derv
 
 # Copy or import functionality that you created 
 # in previous homework assignments to complete
@@ -44,7 +44,10 @@ class LagrangeBasis2D:
     # and y (eta) directions
     def NBasisFuncs(self):
         # IMPORT/COPY THIS FROM EARLIER HW
-        return
+        nbf = 1
+        for deg in self.degs:
+            nbf *= (deg+1)
+        return nbf
 
         
     # basis function evaluation code from 
@@ -53,27 +56,38 @@ class LagrangeBasis2D:
     # or copied before this class is defined
     def EvalBasisFunction(self,A,xi_vals):
         # IMPORT/COPY THIS FROM EARLIER HW
-        return      
+        return mbasis.MultiDimensionalBasisFunction(A,self.degs,self.interp_pts,xi_vals)    
      
     
     # derivative of basis function code
     # from previous homework
     def EvalBasisDerivative(self,A,xis,dim):
         # IMPORT/COPY THIS FROM THE MOST RECENT HOMEWORK
-        return 
+        return derv.LagrangeBasisDervParamMultiD(A,self.degs,self.interp_pts,xis,dim)
 
 
     # Evaluate a sum of basis functions times 
     # coefficients on the parent domain
     def EvaluateFunctionParentDomain(self, d_coeffs, xi_vals):
         # IMPORT/COPY THIS FROM EARLIER HW
-        return
+        val = 0
+        for a in range(0,self.NBasisFuncs()):
+            val += d_coeffs[a] * self.EvalBasisFunction(a,xi_vals)
+        return val
         
     # Evaluate the spatial mapping from xi and eta
     # into x and y coordinates
     def EvaluateSpatialMapping(self, x_pts, xi_vals):
         # IMPORT/COPY THIS FROM EARLIER HW
-        return
+        dim = len(x_pts[0])
+        pt = np.zeros(dim)
+        for a in range(0,self.NBasisFuncs()):
+            Na = self.EvalBasisFunction(a,xi_vals)
+            x_pt = x_pts[a]
+            for j in range(0,dim):
+                pt[j] += x_pt[j] * Na
+                
+        return pt
     
     # Evaluate the Deformation Gradient (i.e.
     # the Jacobian matrix)

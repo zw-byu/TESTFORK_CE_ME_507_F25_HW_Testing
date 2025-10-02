@@ -16,6 +16,10 @@ from matplotlib import pyplot as plt
 # which evaluated a Lagrane polynomial basis function
 # import <UNCOMMENT THIS LINE AND INPUT YOUR FILENAME HERE>
 
+sys.path.append('../HW3_Univariate_Lagrange/')
+
+import Univariate_Lagrange_Basis_Functions as HW3
+
 # x(\xi) = \sum_{a=0}^p x_a * N_a(\xi)
 def XMap(deg,spatial_pts,interp_pts,xi):
     # complete this function

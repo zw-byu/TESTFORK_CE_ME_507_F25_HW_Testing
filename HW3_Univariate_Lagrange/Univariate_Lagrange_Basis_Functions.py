@@ -21,6 +21,17 @@ def LagrangeBasisEvaluation(p,pts,xi,a):
 
     # complete this code and return an appropriate value
     # as given in Hughes Equation 3.6.1
+    numerator = 1
+    denominator = 1
+    for i in range(0,p+1):
+        # skip the point where i equals a
+        if i == a:
+            continue
+        else:
+            numerator *= (xi-pts[i])
+            denominator *= (pts[a] - pts[i])
+    
+    return numerator / denominator
 
 # Plot the Lagrange polynomial basis functions
 # COMMENT THIS CODE
@@ -40,7 +51,16 @@ def InterpolateFunction(p,pts2D,n_samples = 101):
     # Insert appropriate text here, as described
     # in the homework prompt
     
-    return
+    # return
+    pts = [x[0] for x in pts2D]
+    coeffs = [x[1] for x in pts2D]
+    xis = np.linspace(min(pts),max(pts),n_samples)
+    ys = np.zeros(n_samples)
+    for i in range(0,len(ys)):
+        xi = xis[i]
+        for a in range(0,p+1):
+            ys[i] += coeffs[a] * LagrangeBasisEvaluation(p, pts, xi, a)
+    return xis,ys
     
 
 def PlotInterpolateFunction(p,pts2D,n_samples = 101):

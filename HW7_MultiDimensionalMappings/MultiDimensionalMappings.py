@@ -19,6 +19,10 @@ from matplotlib import pyplot as plt
 # functionality using
 # import < INSERT YOUR MODULE NAME HERE >
 
+sys.path.append('../HW6_MultiDimensionalBasisFunction/')
+
+import MultiDimensionalBasisFunction as basis
+
 # This is a class that describes a Lagrange basis
 # in two dimensions
 class LagrangeBasis2D:
@@ -32,24 +36,38 @@ class LagrangeBasis2D:
     # product of basis functions in the x (xi)
     # and y (eta) directions
     def NBasisFuncs(self):
-        return
+        nbf = 1
+        for deg in self.degs:
+            nbf *= (deg+1)
+        return nbf
         
     # basis function evaluation code from 
     # previous homework assignment
     # this should be imported from that assignment
     # or copied before this class is defined
     def EvalBasisFunction(self,A,xi_vals):
-        return        
+        return basis.MultiDimensionalBasisFunction(A,self.degs,self.interp_pts,xi_vals)
 
     # Evaluate a sum of basis functions times 
     # coefficients on the parent domain
     def EvaluateFunctionParentDomain(self, d_coeffs, xi_vals):
-        return
+        val = 0
+        for a in range(0,self.NBasisFuncs()):
+            val += d_coeffs[a] * self.EvalBasisFunction(a,xi_vals)
+        return val
         
     # Evaluate the spatial mapping from xi and eta
     # into x and y coordinates
     def EvaluateSpatialMapping(self, x_pts, xi_vals):
-        return
+        dim = len(x_pts[0])
+        pt = np.zeros(dim)
+        for a in range(0,self.NBasisFuncs()):
+            Na = self.EvalBasisFunction(a,xi_vals)
+            x_pt = x_pts[a]
+            for j in range(0,dim):
+                pt[j] += x_pt[j] * Na
+                
+        return pt
     
     # Grid plotting functionality that is used
     # in all other plotting functions
