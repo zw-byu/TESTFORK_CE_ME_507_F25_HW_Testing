@@ -85,4 +85,4 @@ jobs:
           HW9_DIR: ${{ github.workspace }}/HW9_MultiDimensionalJacobians
         run: |
           export PYTHONPATH="$HW3_DIR:$HW6_DIR:$HW7_DIR:$HW8_DIR:$HW9_DIR"
-          python3 HW10_MultidimensionalSpatialParametricGradient/MultidimensionalSpatialParametricGradient_Testing.py
+          python3 -v HW10_MultidimensionalSpatialParametricGradient/MultidimensionalSpatialParametricGradient_Testing.py
